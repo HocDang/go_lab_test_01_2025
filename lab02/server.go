@@ -33,18 +33,21 @@ func main() {
 
 	// Endpoint tăng counter không sử dụng lock
 	app.Get("/nolock", func(c *fiber.Ctx) error {
+		logic_mock()
 		counterNoLock++
 		return c.SendString("OK")
 	})
 
 	// Endpoint tăng counter dùng atomic
 	app.Get("/atomic", func(c *fiber.Ctx) error {
+		logic_mock()
 		atomic.AddInt64(&counterAtomic, 1)
 		return c.SendString("OK")
 	})
 
 	// Endpoint tăng counter sử dụng Mutex
 	app.Get("/mutex", func(c *fiber.Ctx) error {
+		logic_mock()
 		mutex.Lock()
 		counterMutex++
 		mutex.Unlock()
@@ -53,6 +56,7 @@ func main() {
 
 	// Endpoint tăng counter sử dụng batch processing
 	app.Get("/batch", func(c *fiber.Ctx) error {
+		logic_mock()
 		select {
 		case requestChannel <- 1: // Thêm request vào channel
 			return c.SendString("OK")
@@ -78,6 +82,10 @@ func main() {
 	if err := app.Listen(":8080"); err != nil {
 		panic(err)
 	}
+}
+
+func logic_mock() {
+	time.Sleep(500 * time.Millisecond)
 }
 
 // Hàm này sẽ khởi tạo một số lượng worker để xử lý requests từ channel

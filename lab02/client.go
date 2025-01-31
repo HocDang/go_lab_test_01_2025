@@ -10,8 +10,8 @@ import (
 
 const (
 	numRequests = 2000
-	numThreads  = 5
-	serverURL   = "http://localhost:8080"
+	numThreads  = 500
+	serverURL   = "http://108.61.178.68:8080"
 )
 
 func sendRequests(endpoint string) int32 {
@@ -19,7 +19,7 @@ func sendRequests(endpoint string) int32 {
 
 	var wg sync.WaitGroup
 	client := &http.Client{
-		Timeout: 100 * time.Millisecond,
+		Timeout: 30 * time.Second,
 	}
 	var totalSuccess int32
 
@@ -36,7 +36,7 @@ func sendRequests(endpoint string) int32 {
 				if err == nil {
 					count_success++
 				} else {
-					//fmt.Println(err)
+					// fmt.Println(err)
 				}
 			}
 

@@ -23,7 +23,7 @@ $ go run lab02/server.go
 
 ### Client
 ```
-$ go run lab02/server.go
+$ go run lab02/client.go
 ```
 
 ### Kết quả
